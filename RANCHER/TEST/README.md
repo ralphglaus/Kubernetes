@@ -59,3 +59,19 @@ swapoff -a
 nano /etc/fstab # Swap zeile ausklammern mit #
 ```
 
+Hosts in /etc/hosts eintragen
+```
+cat << EOF >> /etc/hosts
+192.168.20.130 srv-kubemast-01
+192.168.20.131 srv-kubewrk-01
+192.168.20.132 srv-kubewrk-02
+192.168.20.133 srv-kubewrk-03
+EOF
+```
+
+NTP Dienst installieren
+```
+apt install ntp
+```
+
+
