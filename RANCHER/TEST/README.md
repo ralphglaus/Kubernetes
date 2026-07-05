@@ -82,5 +82,13 @@ docker run -d --restart=unless-stopped \
   --privileged \
   rancher/rancher:latest
   ```
-  
+
+  Docker Image neu ausrollen
+  ```
+  docker ps
+docker stop <ID>
+docker image list
+docker image remove <ID> -f
+```
+
 
