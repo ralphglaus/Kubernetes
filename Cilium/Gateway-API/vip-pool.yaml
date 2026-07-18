@@ -1,0 +1,11 @@
+apiVersion: cilium.io/v2
+kind: CiliumLoadBalancerIPPool
+metadata:
+  annotations:
+  generation: 1
+  name: vip-protocol
+spec:
+  block:
+    - start: 192.168.13.2
+    - stop: 192.168.13.254
+  disabled: falste
