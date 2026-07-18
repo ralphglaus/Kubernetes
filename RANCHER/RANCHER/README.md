@@ -129,22 +129,23 @@ sudo rm -rf \
 
 ### CDR installieren für Gateway API
 
+```shell
 
+kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.0/standard-install.yaml
+
+# Verify installation
+kubectl get crd | grep gateway
+```
 
 ### GatewayClass definieren
 
 ```yaml
 
 
+```
 
 
 
-# Installieren von Rancher
 
 
 
-docker run -d --restart=unless-stopped \
-  -p 80:80 -p 443:443 \
-  -v /opt/rancher:/var/lib/rancher \
-  --privileged \
-  rancher/rancher:latest
