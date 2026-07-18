@@ -1,0 +1,9 @@
+apiVersion: cilium.io/v2alpha1
+kind: Cilium2AnnouncementPolicy
+metadata:
+  annotations:
+  generation: 1
+  name: default-l2-announcement-policy
+spec:
+  externalIPs: true
+  loadBalancerIPs: true
