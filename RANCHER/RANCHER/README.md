@@ -129,6 +129,12 @@ sudo rm -rf \
 
 ### CDR installieren für Gateway API
 
+Achtung: Muss evtl. nicht mehr installiert werden zuerst mit folgendem Befehl prüfen:
+
+''`shell
+kubectl get crd | grep gateway
+```
+
 ```shell
 
 kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.0/standard-install.yaml
