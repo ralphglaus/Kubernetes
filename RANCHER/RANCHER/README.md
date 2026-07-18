@@ -96,4 +96,55 @@ Nodes mit installiern
 curl --insecure -fL https://192.168.20.130/system-agent-install.sh | sudo  sh -s - --server https://192.168.20.130 --label 'cattle.io/os=linux' --token stw87djkvw46jrp7528j8xvwwv9pb4czm72lxvfdpt69lqn796xgzd --ca-checksum a27de6c6b98a5c86c853a579af96bbbb04436497046b614df7916d80197ed853 --etcd --controlplane --worker
 ```
 
+# Deinstallieren der Rancher Agenten auf den Worker Nodes
 
+### Prüfen
+
+```shell
+systemctl status rancher-system-agent
+systemctl status rke2-agent
+```
+
+### Uninstall Scirpt laufen lassen
+
+```shell
+/usr/local/bin/rke2-uninstall.sh
+```
+### Verzeichnisse löschen
+
+```shell
+sudo rm -rf \
+/etc/rancher \
+/etc/kubernetes \
+/etc/cni \
+/opt/cni \
+/var/lib/rancher \
+/var/lib/kubelet \
+/var/lib/cni \
+/var/lib/calico \
+/run/calico \
+/run/flannel
+
+```
+
+### CDR installieren für Gateway API
+
+
+
+### GatewayClass definieren
+
+```yaml
+
+
+
+
+
+# Installieren von Rancher
+
+
+
+docker run -d --restart=unless-stopped \
+  -p 80:80 -p 443:443 \
+  -v /opt/rancher:/var/lib/rancher \
+  --privileged \
+  rancher/rancher:latest
