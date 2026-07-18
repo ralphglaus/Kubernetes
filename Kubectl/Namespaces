@@ -1,0 +1,6 @@
+# Namespace generieren
+
+kubectl create namespace nginx-demo
+
+
+
