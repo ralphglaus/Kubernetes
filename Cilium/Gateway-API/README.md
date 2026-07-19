@@ -11,6 +11,14 @@ kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/re
 kubectl get crd gateways.gateway.networking.k8s.io -o yaml | grep -i version
 ```
 
+### Logs anschauen
+
+```shell
+
+kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-operator
+kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-envoy
+kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-agent
+```
 
 
 
