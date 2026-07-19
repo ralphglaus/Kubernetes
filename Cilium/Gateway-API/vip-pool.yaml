@@ -1,10 +1,10 @@
-apiVersion: cilium.io/v2
+apiVersion: "cilium.io/v2"
 kind: CiliumLoadBalancerIPPool
 metadata:
-  generation: 1
-  name: vip-protocol
+  name: "blue-pool"
 spec:
-  block:
-  - start: 192.168.20.170
-    stop: 192.168.20.179
-  disabled: false
+  blocks:
+  - cidr: "10.0.10.0/24"
+  - cidr: "2004::0/112"
+  - start: "20.0.20.100"
+    stop: "20.0.20.200"
