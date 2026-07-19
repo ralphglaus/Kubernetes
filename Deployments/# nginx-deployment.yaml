@@ -2,16 +2,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web-demo
+  name: nginx-demo
+  namespace: nginx-demo
 spec:
-  replicas: 6
+  replicas: 3
   selector:
     matchLabels:
-      app: web-demo
+      app: nginx-demo
   template:
     metadata:
       labels:
-        app: web-demo
+        app: nginx-demo
     spec:
       containers:
       - name: nginx
@@ -27,12 +28,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-demo
+  name: nginx-demo
 spec:
-  type: NodePort
+  type: ClusterIP
   selector:
-    app: web-demo
+    app: nginx-demo
   ports:
   - port: 80
-    targetPort: 80
-    nodePort: 30080
