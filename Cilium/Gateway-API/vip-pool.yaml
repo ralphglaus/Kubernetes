@@ -1,4 +1,4 @@
-apiVersion: cilium.io/v2
+apiVersion: "cilium.io/v2"
 kind: CiliumLoadBalancerIPPool
 metadata:
   generation: 1
@@ -6,5 +6,5 @@ metadata:
 spec:
   block:
     - start: 192.168.20.170
-      stop: 192.168.13.179
+      stop: 192.168.20.179
   disabled: false
