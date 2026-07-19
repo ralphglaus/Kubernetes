@@ -5,6 +5,13 @@
 kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
 ```
 
+### Cilium Werte anpassen
+
+    --set kubeProxyReplacement=true \
+    --set gatewayAPI.enabled=true
+    --set l2announcements.enabled=true
+    
+
 ### CDR Version abfragen
 
 ```shell
