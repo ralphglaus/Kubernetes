@@ -1,54 +1,32 @@
-# Deinstallieren der Rancher Agenten auf den Worker Nodes
-
-### Prüfen
-
-```shell
-systemctl status rancher-system-agent
-systemctl status rke2-agent
-```
-
-### Uninstall Scirpt laufen lassen
-
-```shell
-/usr/local/bin/rke2-uninstall.sh
-```
-### Verzeichnisse löschen
-
-```shell
-sudo rm -rf \
-/etc/rancher \
-/etc/kubernetes \
-/etc/cni \
-/opt/cni \
-/var/lib/rancher \
-/var/lib/kubelet \
-/var/lib/cni \
-/var/lib/calico \
-/run/calico \
-/run/flannel
-
-```
 
 ### CDR installieren für Gateway API
+
+```shell
+kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
+```
+
+### CDR Version abfragen
+
+```shell
+kubectl get crd gateways.gateway.networking.k8s.io -o yaml | grep -i version
+```
+
 
 
 
 ### GatewayClass definieren
 
-```yaml
+
+### Gateway definieren
+
+
+### L2Announcement
+
+./helm upgrade cilium cilium/cilium --set=l2announcements.enabled=enabled
 
 
 
 
 
-# Installieren von Rancher
-
-
-
-docker run -d --restart=unless-stopped \
-  -p 80:80 -p 443:443 \
-  -v /opt/rancher:/var/lib/rancher \
-  --privileged \
-  rancher/rancher:latest
   
 
