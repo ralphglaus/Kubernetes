@@ -1,8 +1,14 @@
+### Prerequest
 
-### CDR installieren für Gateway API
-
+### CDR installieren für Gateway API (Version 1.4.1)
 ```shell
 kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
+```
+
+### CDR Version abfragen
+
+```shell
+kubectl get crd gateways.gateway.networking.k8s.io -o yaml | grep -i version
 ```
 
 ### Cilium Werte anpassen
@@ -10,13 +16,6 @@ kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/re
     --set kubeProxyReplacement=true \
     --set gatewayAPI.enabled=true
     --set l2announcements.enabled=true
-    
-
-### CDR Version abfragen
-
-```shell
-kubectl get crd gateways.gateway.networking.k8s.io -o yaml | grep -i version
-```
 
 ### Logs anschauen
 
