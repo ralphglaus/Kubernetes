@@ -143,6 +143,9 @@ kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/re
 kubectl get crd | grep gateway
 ```
 
+# Verify Version
+kubectl get crd gateways.gateway.networking.k8s.io -o yaml | grep -i version
+
 ### GatewayClass definieren
 
 ```yaml
