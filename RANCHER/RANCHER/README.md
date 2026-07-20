@@ -91,6 +91,11 @@ docker image list
 docker image remove <ID> -f
 ```
 
+Rancher Cluster Installation
+Installation using Rancher — Cilium 1.21.0-dev documentation
+https://docs.cilium.io/en/latest/installation/k8s-install-rancher-existing-nodes/#rancher-managed-rke-clusters
+
+
 Nodes mit installiern
 ```
 curl --insecure -fL https://192.168.20.130/system-agent-install.sh | sudo  sh -s - --server https://192.168.20.130 --label 'cattle.io/os=linux' --token stw87djkvw46jrp7528j8xvwwv9pb4czm72lxvfdpt69lqn796xgzd --ca-checksum a27de6c6b98a5c86c853a579af96bbbb04436497046b614df7916d80197ed853 --etcd --controlplane --worker
