@@ -14,7 +14,9 @@ kubectl get crd gateways.gateway.networking.k8s.io -o yaml | grep -i version
 ### Cilium Werte anpassen
 
     --set kubeProxyReplacement=true \
-    --set gatewayAPI.enabled=true
+    --set disable-kube-proxy=true \
+    --set l7Proxy=true \
+    --set gatewayAPI.enabled=true \
     --set l2announcements.enabled=true
 
 ### Logs anschauen
