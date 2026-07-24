@@ -80,6 +80,11 @@ l2announcements:
   enabled: true
 ```
 
+Prüfen:
+```shell
+kubectl -n kube-system get configmap cilium-config -o yaml | grep -i l2
+```
+
 ```yaml
 apiVersion: cilium.io/v2alpha1
 kind: CiliumL2AnnouncementPolicy
@@ -101,11 +106,146 @@ spec:
   externalIPs: true
   loadBalancerIPs: true
 ```
+Prüfen:
+
+```shell
+kubectl get ciliuml2announcementpolicies
+```
+
+### Nginx Deployment und Service einrichten
+
+Ngnix Deployment:
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  namespace: default
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: nginx
+
+  template:
+    metadata:
+      labels:
+        app: nginx
+
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+
+          ports:
+            - containerPort: 80
+```
+
+Service zu nginx einrichten:
+
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  namespace: default
+
+spec:
+  selector:
+    app: nginx
+
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+
+  type: ClusterIP
+```
+
+Prüfen:
+
+```shell
+kubectl get pods -o wide
+kubectl get svc nginx
+```
+
+### Gateway einrichten
+
+Gateways können in verschiedenen Namespaces installiert werden. Die Route wird nur ind den gleichen Namspace erlaubt.
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: Gateway
+metadata:
+  name: nginx-gateway
+  namespace: default
+spec:
+  addresses:
+  gatewayClassName: cilium
+  adresses:
+  - type: IPAddress
+    value: 172.29.35.140
+  listeners:
+    - name: web-gw
+      port: 80
+      protocol: HTTP
+      
+      allowedRoutes:
+        namespaces:
+          from: Same 
+```
+
+Prüfen:
+
+```shell
+kubectl get gateway
+```
+
+Erzeugter Loadbalancer prüfen:
+
+```shell
+kubectl get svc
+NAME                         TYPE           CLUSTER-IP     EXTERNAL-IP
+nginx                        ClusterIP      10.43.120.20   <none>
+cilium-gateway-nginx-gateway LoadBalancer   10.43.x.x      172.29.35.200
+```
+
+### Route erstellen
+
+```yaml
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: nginx-route
+  namespace: default
+
+spec:
+
+  parentRefs:
+    - name: nginx-gateway
+      sectionName: http
+
+  rules:
+
+    - matches:
+        - path:
+            type: PathPrefix
+            value: /
+
+      backendRefs:
+        - name: nginx
+          port: 80
+```
 
 Prüfen:
 ```shell
-kubectl -n kube-system get configmap cilium-config -o yaml | grep -i l2
+kubectl get httproute
 ```
+
+
+
 
 
 
