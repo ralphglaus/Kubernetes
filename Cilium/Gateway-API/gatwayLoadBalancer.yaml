@@ -4,8 +4,6 @@ metadata:
   name: l2announcement-policy
 spec:
   serviceSelector:
-    matchLabels:
-      app: myapp
   nodeSelector:
     matchExpressions:
       - key: node-role.kubernetes.io/control-plane
