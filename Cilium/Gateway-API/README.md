@@ -121,7 +121,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx
-  namespace: default
+  namespace: app-nginx
 spec:
   replicas: 2
 
@@ -138,9 +138,9 @@ spec:
       containers:
         - name: nginx
           image: nginx:alpine
-
           ports:
-            - containerPort: 80
+            - name: http
+              containerPort: 80
 ```
 
 Service zu nginx einrichten:
@@ -150,8 +150,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx
-  namespace: default
-
+  namespace: app-nginx
 spec:
   selector:
     app: nginx
@@ -159,7 +158,7 @@ spec:
   ports:
     - name: http
       port: 80
-      targetPort: 80
+      targetPort: http
 
   type: ClusterIP
 ```
@@ -171,6 +170,24 @@ kubectl get pods -o wide
 kubectl get svc nginx
 ```
 
+
+### Namespace für app-nginx einrichten
+
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gateway-system
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: app-nginx
+  labels:
+    gateway-access: public
+```
+
 ### Gateway einrichten (Namespace gatway-system)
 
 kubectl create namespace gateway-system
@@ -180,27 +197,37 @@ gateway-system
 ├── TLS-Zertifikate
 └── eventuell gatewaybezogene Policies
 
-
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: nginx-gateway
+  name: public-gateway
   namespace: gateway-system
 spec:
-  addresses:
   gatewayClassName: cilium
-  adresses:
-  - type: IPAddress
-    value: 172.29.35.200  
+
+  addresses:
+    - type: IPAddress
+      value: 172.29.35.200
+
   listeners:
-    - name: web-gw
-      port: 80
+    - name: http
       protocol: HTTP
-      
+      port: 80
+
       allowedRoutes:
         namespaces:
-          from: Same 
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: public
+        allowedRoutes:
+        namespaces:
+          from: Selector
+          selector:
+            matchLabels:
+              gateway-access: public
+
 ```
 
 Prüfen:
@@ -221,20 +248,22 @@ cilium-gateway-nginx-gateway LoadBalancer   10.43.x.x      172.29.35.200
 ### Route erstellen
 
 ```yaml
+
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   name: nginx-route
-  namespace: default
-
+  namespace: app-nginx
 spec:
-
   parentRefs:
-    - name: nginx-gateway
+    - name: internal-gateway
+      namespace: gateway-system
       sectionName: http
 
-  rules:
+  hostnames:
+    - nginx.glaustec.ch
 
+  rules:
     - matches:
         - path:
             type: PathPrefix
