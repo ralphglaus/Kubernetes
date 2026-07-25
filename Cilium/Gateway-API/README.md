@@ -171,7 +171,9 @@ kubectl get pods -o wide
 kubectl get svc nginx
 ```
 
-### Gateway einrichten
+### Gateway einrichten (Namespace gatway-system)
+
+kubectl create namespace gateway-system
 
 Gateways können in verschiedenen Namespaces installiert werden. Die Route wird nur ind den gleichen Namspace erlaubt.
 
@@ -180,13 +182,13 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: nginx-gateway
-  namespace: default
+  namespace: gateway system
 spec:
   addresses:
   gatewayClassName: cilium
   adresses:
   - type: IPAddress
-    value: 172.29.35.140
+    value: 172.29.35.200  
   listeners:
     - name: web-gw
       port: 80
