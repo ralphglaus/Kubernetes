@@ -174,15 +174,19 @@ kubectl get svc nginx
 ### Gateway einrichten (Namespace gatway-system)
 
 kubectl create namespace gateway-system
+Darin liegen:
+gateway-system
+├── Gateway
+├── TLS-Zertifikate
+└── eventuell gatewaybezogene Policies
 
-Gateways können in verschiedenen Namespaces installiert werden. Die Route wird nur ind den gleichen Namspace erlaubt.
 
 ```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: nginx-gateway
-  namespace: gateway system
+  namespace: gateway-system
 spec:
   addresses:
   gatewayClassName: cilium
@@ -245,6 +249,32 @@ Prüfen:
 ```shell
 kubectl get httproute
 ```
+
+### Beispiel Architektur
+
+Cluster
+│
+├── gateway-system
+│   └── public-gateway
+│       ├── 172.29.35.200
+│       ├── HTTP :80
+│       └── HTTPS :443
+│
+├── app-nginx
+│   ├── nginx Deployment
+│   ├── nginx Service
+│   └── nginx HTTPRoute
+│
+├── app-outline
+│   ├── outline Deployment
+│   ├── outline Service
+│   └── outline HTTPRoute
+│
+└── monitoring
+    ├── grafana Deployment
+    ├── grafana Service
+    └── grafana HTTPRoute
+
 
 
 
