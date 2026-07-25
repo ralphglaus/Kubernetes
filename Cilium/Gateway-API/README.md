@@ -282,6 +282,12 @@ kubectl get httproute
 ### Beispiel Architektur
 
 ```
+NAMESPACE        RESOURCE        NAME
+gateway-system   Gateway         internal-gateway
+app-nginx        HTTPRoute       nginx-route
+app-nginx        Service         nginx
+app-nginx        Deployment      nginx
+
 Cluster
 │
 ├── gateway-system
