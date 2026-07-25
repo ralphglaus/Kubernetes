@@ -281,6 +281,7 @@ kubectl get httproute
 
 ### Beispiel Architektur
 
+```
 Cluster
 │
 ├── gateway-system
@@ -303,6 +304,9 @@ Cluster
     ├── grafana Deployment
     ├── grafana Service
     └── grafana HTTPRoute
+```
+
+
 
 
 
