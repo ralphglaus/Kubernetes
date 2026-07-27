@@ -132,30 +132,19 @@ sudo rm -rf \
 
 ```
 
-### CDR installieren für Gateway API
+### Installieren des kubectl Clients lokal
 
-Achtung: Muss evtl. nicht mehr installiert werden zuerst mit folgendem Befehl prüfen:
-
-''`shell
-kubectl get crd | grep gateway
-```
-
+Verzeichnis erstellen:
 ```shell
-
-kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.6.0/standard-install.yaml
-
-# Verify installation
-kubectl get crd | grep gateway
+New-Item -ItemType Directory -Path "$HOME\.kube" -Force
 ```
 
-# Verify Version
-kubectl get crd gateways.gateway.networking.k8s.io -o yaml | grep -i version
+Konfiguration vom Cluster Downloaden
+Beim gewünschten Cluster die drei Punkte wählen und **Download der Kubeconfig** wählen
 
-### GatewayClass definieren
-
-```yaml
-
-
+Konfiguration kopieren:
+```shell
+Copy-Item "$HOME\Downloads\glnet-test.yaml" "$HOME\.kube\config"
 ```
 
 
