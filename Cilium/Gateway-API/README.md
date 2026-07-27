@@ -208,7 +208,7 @@ spec:
 
   addresses:
     - type: IPAddress
-      value: 172.168.20.200
+      value: 192.168.20.200
 
   listeners:
     - name: http
