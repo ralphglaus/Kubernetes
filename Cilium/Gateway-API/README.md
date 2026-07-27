@@ -67,8 +67,8 @@ metadata:
   name: vip-pool
 spec:
   blocks:
-    - start: 172.29.35.200
-      stop: 172.29.35.210
+    - start: 192.168.20.200
+      stop: 192.168.20.210
 ```
 
 ### L2Announcement
@@ -208,7 +208,7 @@ spec:
 
   addresses:
     - type: IPAddress
-      value: 172.29.35.200
+      value: 172.168.20.200
 
   listeners:
     - name: http
