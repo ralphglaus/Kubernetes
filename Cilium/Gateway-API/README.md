@@ -185,7 +185,7 @@ kind: Namespace
 metadata:
   name: app-nginx-test
   labels:
-    gateway-access: public
+    gateway-access: internal
 ```
 
 ### Gateway einrichten (Namespace gatway-system)
