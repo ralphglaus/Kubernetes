@@ -120,8 +120,8 @@ Ngnix Deployment:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx
-  namespace: app-nginx
+  name: nginx-test
+  namespace: app-nginx-test
 spec:
   replicas: 2
 
@@ -132,11 +132,11 @@ spec:
   template:
     metadata:
       labels:
-        app: nginx
+        app: nginx-test
 
     spec:
       containers:
-        - name: nginx
+        - name: nginx-test
           image: nginx:alpine
           ports:
             - name: http
@@ -149,11 +149,11 @@ Service zu nginx einrichten:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx
-  namespace: app-nginx
+  name: nginx-test
+  namespace: app-nginx-test
 spec:
   selector:
-    app: nginx
+    app: nginx-test
 
   ports:
     - name: http
@@ -183,7 +183,7 @@ metadata:
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: app-nginx
+  name: app-nginx-test
   labels:
     gateway-access: public
 ```
