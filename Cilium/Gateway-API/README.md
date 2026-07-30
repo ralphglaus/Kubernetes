@@ -67,6 +67,12 @@ gatewayAPI:
   enabled: true
 ```
 
+Prüfen der Cilium Einstellungen:
+
+```shell
+helm get values cilium -n kube-system -a | grep -A10 -E 'gatewayAPI|kubeProxyReplacement|l7Proxy'
+```
+
 ### IP Pool erstellen
 
 ```yaml
