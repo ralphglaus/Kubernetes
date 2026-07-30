@@ -35,6 +35,7 @@ kubectl -n kube-system logs -l app.kubernetes.io/name=cilium-agent
 
 
 ### Gateway definieren
+```yaml
 apiVersion: gateway.networking.k8s.io/v1
 kind: GatewayClass
 metadata:
@@ -42,7 +43,7 @@ metadata:
 spec:
   controllerName: io.cilium/gateway-controller
   description: The default Cilium GatewayClass
-
+```
 
 Prüfen:
 
@@ -50,6 +51,14 @@ Prüfen:
 kubectl get gatewayclass
 ```
 Testen der Gatewayclass (Achtung ACCEPTED muss auf True sein)
+Wenn das Gateway nicht auf True ist dann folgendes machen:
+
+```shell
+kubectl rollout restart daemonset/cilium -n kube-system
+kubectl rollout restart deployment/cilium-operator -n kube-system
+kubectl rollout status daemonset/cilium -n kube-system
+kubectl rollout status deployment/cilium-operator -n kube-system
+```
 
 
 In Cilium muss die gatewayAPI aktiviert werden:
