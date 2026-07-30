@@ -127,7 +127,7 @@ spec:
 
   selector:
     matchLabels:
-      app: nginx
+      app: nginx-test
 
   template:
     metadata:
@@ -201,7 +201,7 @@ gateway-system
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-  name: public-gateway
+  name: internal-gateway
   namespace: gateway-system
 spec:
   gatewayClassName: cilium
@@ -220,13 +220,13 @@ spec:
           from: Selector
           selector:
             matchLabels:
-              gateway-access: public
+              gateway-access: internal
         allowedRoutes:
         namespaces:
           from: Selector
           selector:
             matchLabels:
-              gateway-access: public
+              gateway-access: internal
 
 ```
 
@@ -252,8 +252,8 @@ cilium-gateway-nginx-gateway LoadBalancer   10.43.x.x      172.29.35.200
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: nginx-route
-  namespace: app-nginx
+  name: nginx-test-route
+  namespace: app-nginx-test
 spec:
   parentRefs:
     - name: internal-gateway
@@ -270,7 +270,7 @@ spec:
             value: /
 
       backendRefs:
-        - name: nginx
+        - name: nginx-test
           port: 80
 ```
 
